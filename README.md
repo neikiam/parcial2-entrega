@@ -1,4 +1,4 @@
-![Gestion](./screenshot.png)
+![Gestion](./organizer.png)
 
 ---
 
