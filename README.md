@@ -1,7 +1,10 @@
+![Gestion](./screenshot.png)
+
+---
 
 Sistema de gestión de estudiantes con scraper de Google Scholar.
 
-En CMD:
+Crear un .env basado en .env.example y luego, en CMD:
 
 ```bash
 py -3.10 -m venv .venv
@@ -26,8 +29,6 @@ python -m pip install -U pip setuptools wheel
 ```bash
 python -m pip install -r requirements.txt
 ```
-
-Crear un .env basado en .env.example y luego
 
 ```bash
 python manage.py makemigrations
