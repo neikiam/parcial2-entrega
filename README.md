@@ -1,4 +1,6 @@
-![Gestion](./organizer.png)
+CUENTA DE EJEMPLO
+Usuario: Mark
+Contraseña: marselo123
 
 ---
 

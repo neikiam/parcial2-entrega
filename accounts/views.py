@@ -2,9 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.conf import settings
 from .forms import RegisterForm
-from utils.email_utils import send_email_with_sendgrid
 
 def register_view(request):
     if request.method == 'POST':
@@ -17,6 +15,8 @@ def register_view(request):
             
             login(request, user)
             return redirect('estudiantes:dashboard')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario')
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})

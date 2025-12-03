@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.conf import settings
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from io import BytesIO
 from .models import Alumno
 from .forms import AlumnoForm
-from utils.email_utils import send_email_with_sendgrid
 
 @login_required
 def dashboard(request):
@@ -24,6 +22,8 @@ def create_alumno(request):
             alumno.save()
             messages.success(request, 'Alumno creado exitosamente')
             return redirect('estudiantes:dashboard')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario')
     else:
         form = AlumnoForm()
     return render(request, 'estudiantes/form.html', {'form': form, 'action': 'Crear'})
@@ -37,6 +37,8 @@ def edit_alumno(request, pk):
             form.save()
             messages.success(request, 'Alumno actualizado exitosamente')
             return redirect('estudiantes:dashboard')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario')
     else:
         form = AlumnoForm(instance=alumno)
     return render(request, 'estudiantes/form.html', {'form': form, 'action': 'Editar'})
