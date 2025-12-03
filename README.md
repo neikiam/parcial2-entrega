@@ -4,9 +4,9 @@ Contraseña: marselo123
 
 ---
 
-Sistema de gestión de estudiantes con scraper de Google Scholar.
+Sistema de gestión de estudiantes con scraper que muestra resultados de Wikipedia
 
-Crear un .env basado en .env.example y luego, en CMD:
+Seguir estos pasos copiando y pegando en CMD:
 
 ```bash
 py -3.10 -m venv .venv
