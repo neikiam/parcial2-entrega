@@ -17,21 +17,25 @@ def scraper_view(request):
             resultados_texto = request.POST.get('resultados_texto', '')
             palabra = request.POST.get('palabra_busqueda', '')
             
-            try:
-                send_mail(
-                    subject=f'Resultados de búsqueda: {palabra}',
-                    message=resultados_texto,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[request.user.email],
-                    fail_silently=True,
-                )
-                messages.success(request, f'Resultados enviados a {request.user.email}')
-            except:
-                messages.error(request, 'No se pudo enviar el email')
+            if request.user.email:
+                try:
+                    send_mail(
+                        subject=f'Resultados de búsqueda: {palabra}',
+                        message=resultados_texto,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[request.user.email],
+                        fail_silently=False,
+                    )
+                    messages.success(request, f'Resultados enviados a {request.user.email}')
+                except Exception as e:
+                    messages.error(request, 'No se pudo enviar el email')
+            else:
+                messages.error(request, 'No tienes un email configurado')
             
+            form = ScraperForm()
             return render(request, 'scraper/scraper.html', {'form': form, 'results': []})
         
-        if form.is_valid():
+        elif form.is_valid():
             palabra_clave = form.cleaned_data['palabra_clave']
             
             api_url = "https://es.wikipedia.org/w/api.php"
@@ -77,6 +81,8 @@ def scraper_view(request):
                 messages.error(request, f'Error de conexión: {str(e)[:100]}')
             except Exception as e:
                 messages.error(request, f'Error inesperado: {str(e)[:100]}')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario')
     else:
         form = ScraperForm()
     
